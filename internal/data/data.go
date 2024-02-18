@@ -1,14 +1,13 @@
 package data
 
 import (
-	"github.com/go-kratos/kratos-layout/internal/conf"
-
-	"github.com/go-kratos/kratos/v2/log"
+	"code.srdcloud.cn/AItestproject/AIPass/aicore-common/log"
+	"context"
 	"github.com/google/wire"
 )
 
 // ProviderSet is data providers.
-var ProviderSet = wire.NewSet(NewData, NewGreeterRepo)
+var ProviderSet = wire.NewSet(NewData)
 
 // Data .
 type Data struct {
@@ -16,9 +15,9 @@ type Data struct {
 }
 
 // NewData .
-func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
+func NewData() (*Data, func(), error) {
 	cleanup := func() {
-		log.NewHelper(logger).Info("closing the data resources")
+		log.NewHelper(log.StdLogger).Info(context.Background(), "closing the data resources")
 	}
 	return &Data{}, cleanup, nil
 }
